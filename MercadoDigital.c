@@ -3,6 +3,9 @@
 #include <locale.h>
 #include <math.h>
 
+struct orderProduto{
+	int codigo;
+};
 struct modelos {
 	char marca[20];
 	char modelo[20];
@@ -91,6 +94,7 @@ int mostraMenuInicial() {
     printf("3 - Listar os Clientes\n");
     printf("4 - Listar os Produtos\n");
     printf("5 - Efetuar uma Venda\n");
+	printf("6 - Localizar Cliente\n");
     printf("0 - Sair do Mercado Digital\n");
     printf("===============================================================================\n");
     printf("Digite sua opcao: \n");
@@ -125,6 +129,11 @@ int mostraMenuInicial() {
     		system("cls");
     		efetuarVenda(cliente, produto, carrinho);
     		system ("pause");
+    	break;  
+		case 6:
+    		system("cls");
+    		efetuarVenda(cliente, produto, carrinho);
+    		system ("pause");
     	break;   
    	case 0:
     		printf("Volte sempre!\n");
@@ -139,12 +148,11 @@ int mostraMenuInicial() {
 	return opcao;
 	
 }
-
 struct clientes cadastrarCliente(){
 
-printf("===============================================================================\n");
-printf("==                  CADASTRO DE CLIENTES NO MERCADO DIGITAL                  ==\n");
-printf("===============================================================================\n");
+	printf("===============================================================================\n");
+	printf("==                  CADASTRO DE CLIENTES NO MERCADO DIGITAL                  ==\n");
+	printf("===============================================================================\n");
 	
 	struct clientes c;
 	
@@ -176,33 +184,29 @@ printf("========================================================================
 	return c;
 
 }
-
 int geraCodigoCliente(double cpf) {
 	return cpf = rand() % 100;
 }
-
 void listarClientes(struct clientes cliente[3]) {
 	
-printf("===============================================================================\n");
-printf("==                  CLIENTES CADASTRADOS NO MERCADO DIGITAL                  ==\n");
-printf("===============================================================================\n");
-printf("CODIGO  NOME            CPF             SEXO    TEL             CEL\n");
+	printf("===============================================================================\n");
+	printf("==                  CLIENTES CADASTRADOS NO MERCADO DIGITAL                  ==\n");
+	printf("===============================================================================\n");
+	printf("CODIGO  NOME            CPF             SEXO    TEL             CEL\n");
 
 	for(int i = 0; i < 3; i++) {
 		printf("%d     %s      %.0lf    %s    %s    %s\n",cliente[i].codigo,cliente[i].nome,cliente[i].cpf,cliente[i].sexo,cliente[i].tel.fixo,cliente[i].tel.movel);
 	} 
 	
-printf("===============================================================================\n");
+	printf("===============================================================================\n");
 	
-//	system ("pause");
-	
+	//	system ("pause");
 }
-
 struct produtos cadastrarProduto() {
 
-printf("===============================================================================\n");
-printf("==                  CADASTRO DE PRODUTOS NO MERCADO DIGITAL                  ==\n");
-printf("===============================================================================\n");
+	printf("===============================================================================\n");
+	printf("==                  CADASTRO DE PRODUTOS NO MERCADO DIGITAL                  ==\n");
+	printf("===============================================================================\n");
 
 	struct produtos p;
 		
@@ -230,28 +234,25 @@ printf("========================================================================
 	return p;
 
 }
-
 int geraCodigoProduto(char nomeProduto[30]) {
 	//return nomeProduto[30] = rand() % 100;
     return ("%c",nomeProduto[0]) + ("%c",nomeProduto[1]);
 
 }
-
 void listarProdutos(struct produtos produto[10]) {
-printf("===============================================================================\n");
-printf("==                  PRODUTOS DISPONIVEIS NO MERCADO DIGITAL                  ==\n");
-printf("===============================================================================\n");
+	printf("===============================================================================\n");
+	printf("==                  PRODUTOS DISPONIVEIS NO MERCADO DIGITAL                  ==\n");
+	printf("===============================================================================\n");
 	
 	for(int i = 0; i < 10; i++) {
 		printf("%d - %s - %s - %s - R$ %.2lf \n",produto[i].codigo,produto[i].nome,produto[i].m.modelo,produto[i].m.marca,produto[i].valor);
 	}
 	
-printf("===============================================================================\n");
+	printf("===============================================================================\n");
 
 	//system ("pause");
 	
 }
-
 void efetuarVenda(struct clientes cliente[3], struct produtos produto[10], struct carrinhos carrinho[3]) {
 	int codigo, codigo_p;
 	
@@ -286,7 +287,6 @@ void efetuarVenda(struct clientes cliente[3], struct produtos produto[10], struc
 	finalizarVenda(carrinho);
 	
 }
-
 struct clientes localizaCliente(int codigo, struct clientes cliente[3]) {
 	struct clientes c;
 	
@@ -299,7 +299,6 @@ struct clientes localizaCliente(int codigo, struct clientes cliente[3]) {
 	return c;
 	
 }
-
 struct produtos localizaProduto(int codigo_p, struct produtos produto[10]) {
 	
 	for(int i = 0; i < 10; i++) {
@@ -309,7 +308,6 @@ struct produtos localizaProduto(int codigo_p, struct produtos produto[10]) {
 	}
 	
 }
-
 void finalizarVenda(struct carrinhos carrinho[3]) {
 	
 	printf("===============================================================================\n");	
@@ -327,21 +325,19 @@ void finalizarVenda(struct carrinhos carrinho[3]) {
 	printf("TOTAL DA COMPRA: R$ %.lf\n",carrinho[0].total);
 	printf("===============================================================================\n");
 }
-
 void listarCarrinho(struct carrinhos carrinho[3]) {
-system("cls");
-printf("===============================================================================\n");
-printf("==                            FINALIZANDO A VENDA                            ==\n");
-printf("===============================================================================\n");
-printf("DADOS DO CLIENTE: %d - %s - %0.lf\n",carrinho[0].cliente.codigo,carrinho[0].cliente.nome,carrinho[0].cliente.cpf);
-printf("===============================================================================\n");
-printf("PRODUTOS COMPRADOS:\n");
+	system("cls");
+	printf("===============================================================================\n");
+	printf("==                            FINALIZANDO A VENDA                            ==\n");
+	printf("===============================================================================\n");
+	printf("DADOS DO CLIENTE: %d - %s - %0.lf\n",carrinho[0].cliente.codigo,carrinho[0].cliente.nome,carrinho[0].cliente.cpf);
+	printf("===============================================================================\n");
+	printf("PRODUTOS COMPRADOS:\n");
 	for(int i = 0; i < 3; i++) {
 		printf("%d - %s %s %s - QTD: %d VL.UNIT: R$ %.2lf VL.TOTAL: %.2lf \n",carrinho[i].produto.codigo,carrinho[i].produto.nome,carrinho[i].produto.m.marca,carrinho[i].produto.m.modelo,carrinho[i].quantidade,carrinho[i].unitario,(carrinho[i].unitario*carrinho[i].quantidade));
 	}
 
 }
-
 double calculaSubtotal(struct carrinhos carrinho[3]) {
 	for(int i = 0; i < 3; i++) {
 		carrinho[0].subtotal = carrinho[0].subtotal + (carrinho[i].unitario * carrinho[i].quantidade);
