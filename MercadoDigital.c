@@ -207,7 +207,8 @@ struct clientes cadastrarCliente(){
 
 }
 int geraCodigoCliente(double cpf) {
-	return cpf = rand() % 100;
+	double split = cpf / 100000;
+	return split;
 }
 void listarClientes(struct clientes cliente[3]) {
 	printf("===============================================================================\n");
