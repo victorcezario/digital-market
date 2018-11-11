@@ -65,6 +65,10 @@ struct carrinhos {
 int mostraMenuInicial();
 struct clientes cadastrarCliente();
 int geraCodigoCliente(double cpf);
+void ordenacaoBolhaCliente(struct clientes cliente[3]);
+void ordenacaoBolhaProduto(struct produtos produto[10]);
+int buscaBinariaProdutos(int valorProcurado, int comeco, int fim, struct produtos produto[10]);
+int buscaBinariaClientes(int valorProcurado, int comeco, int fim, struct clientes cliente[3]);
 void listarClientes(struct clientes cliente[3]);
 struct produtos cadastrarProduto(); 
 int geraCodigoProduto(char nomeProduto[30]); 
@@ -94,7 +98,10 @@ int mostraMenuInicial() {
     printf("3 - Listar os Clientes\n");
     printf("4 - Listar os Produtos\n");
     printf("5 - Efetuar uma Venda\n");
-	printf("6 - Localizar Cliente\n");
+	printf("6 - Ordenar Cliente\n");
+	printf("7 - Ordenar Produto\n");
+	printf("8 - Consultar Cliente\n");
+	printf("9 - Consultar Produto\n");
     printf("0 - Sair do Mercado Digital\n");
     printf("===============================================================================\n");
     printf("Digite sua opcao: \n");
@@ -132,9 +139,24 @@ int mostraMenuInicial() {
     	break;  
 		case 6:
     		system("cls");
-    		efetuarVenda(cliente, produto, carrinho);
+    		ordenacaoBolhaCliente(cliente);
     		system ("pause");
-    	break;   
+    	break;  
+		case 7:
+    		system("cls");
+    		ordenacaoBolhaProduto(produto);
+    		system ("pause");
+    	break; 
+		case 8:
+    		system("cls");
+    		buscarClientes(cliente);
+    		system ("pause");
+    	break; 
+		case 9:
+    		system("cls");
+    		buscarProdutos(produto);
+    		system ("pause");
+    	break; 
    	case 0:
     		printf("Volte sempre!\n");
     		system ("pause");
@@ -188,7 +210,6 @@ int geraCodigoCliente(double cpf) {
 	return cpf = rand() % 100;
 }
 void listarClientes(struct clientes cliente[3]) {
-	
 	printf("===============================================================================\n");
 	printf("==                  CLIENTES CADASTRADOS NO MERCADO DIGITAL                  ==\n");
 	printf("===============================================================================\n");
@@ -349,3 +370,103 @@ double calculaTotal(double subtotal, double desconto) {
 	total = subtotal - desconto;
 	return total;
 }
+void ordenacaoBolhaCliente(struct clientes cliente[3]){
+	int auxiliar;
+    for (int fim = 2; fim >= 0; fim--)
+    	for (int i = 0; i < fim; i++)
+        {
+        	if (cliente[i].codigo > cliente[i + 1].codigo)
+            {
+                auxiliar = cliente[i].codigo;
+                cliente[i].codigo = cliente[i + 1].codigo;
+                cliente[i + 1].codigo = auxiliar;
+            }
+         }
+	printf("Clientes ordenados \n");
+	listarClientes(cliente);
+}
+void ordenacaoBolhaProduto(struct produtos produto[10]){
+	int auxiliar;
+    for (int fim = 9; fim >= 0; fim--)
+    	for (int i = 0; i < fim; i++)
+        {
+        	if (produto[i].codigo > produto[i + 1].codigo)
+            {
+                auxiliar = produto[i].codigo;
+                produto[i].codigo = produto[i + 1].codigo;
+                produto[i + 1].codigo = auxiliar;
+            }
+         }
+	printf("Produtos ordenados \n");
+	listarProdutos(produto);
+}
+void buscarProdutos(struct produtos produto[10]){
+	int valorProcurado,comeco,fim;
+	printf("===============================================================================\n");
+	printf("==             LOCALIZAR produtoS CADASTRADOS NO MERCADO DIGITAL             ==\n");
+	printf("===============================================================================\n");
+	printf("Informe o ID do Produto: \n");
+    scanf("%d",&valorProcurado);
+	comeco = 0;
+	fim = 9;
+	buscaBinariaProdutos(valorProcurado, comeco, fim, produto);
+	printf("===============================================================================\n");
+}
+int buscaBinariaProdutos(int valorProcurado, int comeco, int fim, struct produtos produto[10])
+{
+	int meio,achou=-1;
+	meio=(comeco+fim)/2;
+	if (comeco<=fim)
+    {   if (valorProcurado==produto[meio].codigo)
+        {   achou=meio;
+			printf("Produto encontrado !\n");
+			printf("%d - %s - %s - %s - R$ %.2lf \n",produto[meio].codigo,produto[meio].nome,produto[meio].m.modelo,produto[meio].m.marca,produto[meio].valor);
+            return achou;
+        }else{
+			 if(valorProcurado<produto[meio].codigo){
+				 buscaBinariaProdutos(valorProcurado,comeco,meio-1, produto);
+			 }else{
+				 buscaBinariaProdutos(valorProcurado,meio+1,fim, produto);
+			 }
+ 		}
+    }else{
+		printf("Produto nao encontrado !\n");
+		return achou;
+	}
+        
+ }
+ void buscarClientes(struct clientes cliente[3]){
+	int valorProcurado,comeco,fim;
+	printf("===============================================================================\n");
+	printf("==             LOCALIZAR CLIENTES CADASTRADOS NO MERCADO DIGITAL             ==\n");
+	printf("===============================================================================\n");
+	printf("Informe o ID do Cliente: \n");
+    scanf("%d",&valorProcurado);
+	comeco = 0;
+	fim = 3;
+	buscaBinariaClientes(valorProcurado, comeco, fim, cliente);
+	printf("===============================================================================\n");
+}
+int buscaBinariaClientes(int valorProcurado, int comeco, int fim, struct clientes cliente[3])
+{
+	int meio,achou=-1;
+	meio=(comeco+fim)/2;
+	if (comeco<=fim)
+    {   if (valorProcurado==cliente[meio].codigo)
+        {   achou=meio;
+			printf("Cliente encontrado !\n");
+			printf("%d     %s      %.0lf    %s    %s    %s\n",cliente[meio].codigo,cliente[meio].nome,cliente[meio].cpf,cliente[meio].sexo,cliente[meio].tel.fixo,cliente[meio].tel.movel);
+            return achou;
+        }else{
+			 if(valorProcurado<cliente[meio].codigo){
+				 buscaBinariaClientes(valorProcurado,comeco,meio-1, cliente);
+			 }else{
+				 buscaBinariaClientes(valorProcurado,meio+1,fim, cliente);
+			 }
+ 		}
+    }else{
+		printf("Cliente nao encontrado !\n");
+		return achou;
+	}
+        
+ }
