@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <locale.h>
 #include <math.h>
-
+//ALUNOS:
+//VICTOR CEZARIO
+//PAULO DIAS
+//ANTONIO MARCOS
 struct orderProduto{
 	int codigo;
 };
